@@ -95,10 +95,20 @@ const Employees = () => {
       }])
 
       function handleTeamSelectionChange(event){
-        console.log(event.target.value)
+        console.log(event.target.value);
         setTeam(event.target.value);
-        
       }
+
+      function handleEmployeeCardClick(event){
+        const transformedEmployees = employees.map((employee) => employee.id === parseInt(event.currentTarget.id)
+        ?(employee.teamName === selectedTeam)?{...employee, teamName: ''}:{...employee, teamName: selectedTeam}
+        :employee);
+
+        setEmployees(transformedEmployees); 
+
+      }
+
+
     return (
         <main className="container">
 
@@ -121,7 +131,7 @@ const Employees = () => {
               {
                 employees.map((employee) => (
                   // style - cursor..when hovering above this element it changes the cursor display to a hand click me icon
-                  <div id="{employee.id}" className="card m-2" style={{cursor: "pointer"}}>
+                  <div id={employee.id} className={(employee.teamName === selectedTeam?'card m-2 standout':'card m-2')} style={{cursor: "pointer"}} onClick={handleEmployeeCardClick}>
 
                     {(employee.gender === 'male')?<img src={maleProfile} alt="Unable to find image" className="card-img-top"/> :
                                                   <img src={femaleProfile} alt="Unable to find image" className="card-img-top"/>}

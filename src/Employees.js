@@ -29,7 +29,9 @@ const Employees = ({employees, selectedTeam, handleEmployeeCardClick, handleTeam
               {
                 employees.map((employee) => (
                   // style - cursor..when hovering above this element it changes the cursor display to a hand click me icon
-                  <div id={employee.id} className={(employee.teamName === selectedTeam?'card m-2 standout':'card m-2')} style={{cursor: "pointer"}} onClick={handleEmployeeCardClick}>
+                  // key attribute within div element that represents a card that denotes a employee object within a list of employee objects
+                  // The key attribute helps React identify changes within a list of elements and assign key attribute to a unique identifier, in this case key is assigned to id
+                  <div key={employee.id} id={employee.id} className={(employee.teamName === selectedTeam?'card m-2 standout':'card m-2')} style={{cursor: "pointer"}} onClick={handleEmployeeCardClick}>
 
                     {(employee.gender === 'male')?<img src={maleProfile} alt="Unable to find image" className="card-img-top"/> :
                                                   <img src={femaleProfile} alt="Unable to find image" className="card-img-top"/>}

@@ -1,17 +1,19 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import Employees from "./Employees";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [selectedTeam, setTeam] = useState("TeamB");
+  // || - OR operator in JS checks if the first condition is true, if so it doesn't evne look at the next condition
+  const [selectedTeam, setTeam] = useState(JSON.parse(localStorage.getItem('selectedTeam')) || "TeamB");
 
   // employees = employee data. the state of the employee data is maintained in the employees variable
   // setEmployees is a function reference and is used where ever we need to change the state of the employees array
   // useState hook returns a pair of values the current state and a function that updates it
-  const [employees, setEmployees] = useState([
+
+  // The state of our application will now be persisted to our browser's local storage
+  const [employees, setEmployees] = useState(JSON.parse(localStorage.getItem('employeeList')) ||[
     {
       id: 1,
       fullName: "Bob Jones",
@@ -97,6 +99,18 @@ function App() {
       teamName: "TeamD",
     },
   ]);
+
+
+  //
+  useEffect(() => {
+    localStorage.setItem('employeeList', JSON.stringify(employees));
+
+  }, [employees]);
+
+  useEffect(() => {
+    localStorage.setItem('selectedTeam', JSON.stringify(selectedTeam));
+
+  }, [selectedTeam]);
 
   function handleTeamSelectionChange(event) {
     console.log(event.target.value);

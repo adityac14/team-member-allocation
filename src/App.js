@@ -2,6 +2,9 @@ import "./App.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import Employees from "./Employees";
+import GroupedTeamMembers from "./GroupedTeamMembers";
+import Nav from "./Nav";
+import NotFound from "./NotFound";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -134,6 +137,7 @@ function App() {
   return (
     <div>
       <Router>
+        <Nav />
         <Header
           selectedTeam={selectedTeam}
           teamMemberCount={
@@ -159,8 +163,17 @@ function App() {
           {/* If path contains /GroupedTeamMembers than the GroupedTeamMembers component along with the Heander and Footer components will be rendered to the UI*/}
           <Route
             path="/GroupedTeamMembers"
-            element={<GroupedTeamMembers />}
+            element={
+              <GroupedTeamMembers
+                employees={employees}
+                selectedTeam={selectedTeam}
+                setTeam={setTeam}
+              />
+            }
           ></Route>
+          {/* path=*, is a wildcard character that catches all paths that are not equal to the paths declared above */}
+
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
 
         <Footer />
